@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 function randomNumber( min, max ) {
     min = Math.ceil( min );
     max = Math.floor( max );
@@ -9,104 +7,112 @@ function randomNumber( min, max ) {
   }
 
 
-let imageAll = document.getElementById('imgAll');
+let ImgAll = document.getElementById('imgAll');
 let firstImg = document.getElementById('firstImg');
 let secondImg = document.getElementById('secondImg');
 let thirdImg = document.getElementById('thirdImg');
+let viewInfo = document.getElementById('viewInfo');
+let buttonResults = document.getElementById('buttonResults');
+
 
 let imgArray = [
-    'bathroom.jpg',
-    'breakfast.jpg',
-    'bubblegum.jpg',
-    'wine-glass.jpg',
-    'chair.jpg',
-    'cthulhu.jpg',
-    'dog-duck.jpg',
-    'dragon.jpg',
-    'pen.jpg',
-    'pet-sweep.jpg',
-    'scissors.jpg',
-    'shark.jpg',
-    'sweep.png',
-    'tauntaun.jpg',
-    'boots.jpg',
-    'unicorn.jpg',
-    'usb.gif',
-    'banana.jpg',
-    'water-can.jpg',
-    
-  ];
-  let counter = 0;
+  'banana.jpg',
+  'bathroom.jpg',
+  'boots.jpg',
+  'breakfast.jpg',
+  'bubblegum.jpg',
+  'chair.jpg',
+  'cthulhu.jpg',
+  'dog-duck.jpg',
+  'dragon.jpg',
+  'pen.jpg',
+  'pet-sweep.jpg',
+  'scissors.jpg',
+  'shark.jpg',
+  'sweep.png',
+  'tauntaun.jpg',
+  'unicorn.jpg',
+  'usb.gif',
+  'water-can.jpg',
+  'wine-glass.jpg'
+];
+let counter = 0;
+let round=25;
+let firstIndex ;
+let secondIndex;
+let thirdIndex;
 
-function Showimg(name, src ){
-    this.name = name;
-    this.time =1;
-    this.view =0;
-    this.src = `./img/${src}`;
-    Showimg.all.push(this);
-    
+function ShowImg(name, src ){
+  this.name = name;
+  
+  this.view =0;
+  this.clicks=0;
+  this.imgsrc = `./Img/${src}`;
+  ShowImg.all.push(this);
+  
 }
-Showimg.all=[];
+ShowImg.all=[];
 
 for( let i = 0; i < imgArray.length; i++ ){
-    new Showimg( imgArray[i].split( '.' )[0], imgArray[i] );
-  }
-  
+  new ShowImg( imgArray[i].split( '.' )[0], imgArray[i] );
+}
+
 function render(){
-   let firstIndex = randomNumber(0,imgArray.length-1)
-   let secondIndex;
-   let thirdIndex;
-   do{
-        secondIndex = randomNumber(0, imgArray.length-1);
-        thirdIndex = randomNumber(0,imgArray.length-1);
-   }while((firstIndex === secondIndex)||(firstIndex === thirdIndex)||(secondIndex === thirdIndex));
+  firstIndex = randomNumber(0,imgArray.length-1)
+ 
+ do{
+      secondIndex = randomNumber(0, imgArray.length-1);
+      thirdIndex = randomNumber(0,imgArray.length-1);
+ }while((firstIndex === secondIndex)||(firstIndex === thirdIndex)||(secondIndex === thirdIndex));
 
+ 
+firstImg.src = ShowImg.all[firstIndex].imgsrc;
+secondImg.src = ShowImg.all[secondIndex].imgsrc;
+thirdImg.src = ShowImg.all[thirdIndex].imgsrc;
+
+ShowImg.all[firstIndex].view++;
+
+ShowImg.all[secondIndex].view++;
+ShowImg.all[thirdIndex].view++;
+}
+
+
+function eventHandler(e) {
+  if((e.target.id === 'firstImg' || e.target.id === 'secondImg' || e.target.id === 'thirdImg') && counter < round){
+    if(e.target.id === 'firstImg' ){
+      ShowImg.all[firstIndex].clicks++;
+    }
+    if(e.target.id === 'firstImg' ){
+      ShowImg.all[secondIndex].clicks++;
+    }
+    if(e.target.id === 'firstImg' ){
+      ShowImg.all[thirdIndex].clicks++;
+     }
+    counter++;
    
-firstImg.src = Showimg.all[firstIndex].src;
-secondImg.src = Showimg.all[secondIndex].src;
-thirdImg.src = Showimg.all[thirdIndex].src;
-
-Showimg.all[firstIndex].view++;
-console.log(Showimg.all[firstIndex].view++);
-Showimg.all[secondIndex].view++;
-Showimg.all[thirdIndex].view++;
-
-
+    render();
+  }
 
 }
 
-function eventHandler(e) {
-    if((e.target.id === 'firstImg' || e.target.id === 'secondImg' || e.target.id === 'thirdImg') && counter < 25){
-      render();
-      console.log(counter);
-      counter++;
-  
-    }
-  
+
+function showData(e){
+  let ul = document.createElement('ul');
+  viewInfo.appendChild(ul);
+  for(let i=0 ; i<imgArray.length; i++){
+    let li =document.createElement('li');
+    ul.appendChild(li);
+    li.textContent=`${ShowImg.all[i].name} banana had ${ShowImg.all[i].clicks} votes, and was seen ${ShowImg.all[i].view} times`
   }
-  
-  imgAll.addEventListener('click', eventHandler);
-  
-  render();
-
-  let numClick=0;
-  for(let j=0 ; j<imgArray.length; j++){
-    console.log(firstImg);
-    firstImg.onclick = function(b) { 
-       console.log(++numClick); 
-    }
-
-  }
-
-  setTimeout(function(){
-    document.getElementById('firstImg').style.display = 'block';
-    document.getElementById('secondImg').style.display = 'block';
-    document.getElementById('thirdImg').style.display = 'block';
-},Showimg.time);
+  buttonResults.removeEventListener('click',showData);
+}
+imgAll.addEventListener('click', eventHandler);
+viewInfo.addEventListener('click', eventHandler);
+render();
 
 function randomNumber( min, max ) {
-    min = Math.ceil( min );
-    max = Math.floor( max );
-    return Math.floor( Math.random() * ( max - min + 1 ) + min ); //The maximum is inclusive and the minimum is inclusive
-  }
+  min = Math.ceil( min );
+  max = Math.floor( max );
+  return Math.floor( Math.random() * ( max - min + 1 ) + min ); //The maximum is inclusive and the minimum is inclusive
+}
 
