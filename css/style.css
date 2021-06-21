@@ -58,37 +58,15 @@ main{
 
 
 }
-/* .mainSection{
-  justify-content: center;
-  justify-items: center;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  gap: 20px;
-  display: flex;
-  
-} */
 
-/* .imgContenar{
-
-
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
-  text-align: center;
-  justify-content: center;
-  justify-items: center;
- display: flex;
-}  */
 
  img{
 
   width: 25%;
   text-align: center;
-  /* justify-content: center; */
-  /* justify-items: center; */
-  /* display:inline-flex; */
   grid-template-columns: 1fr 1fr 1fr;
   text-align: right;
+    gap: 20px;
 }
 
 
@@ -106,7 +84,6 @@ main{
   footer{
 
       background-color: chartreuse;
-      
       position: fixed;
       padding: 10px 10px 0px 10px;
       bottom: 0;
