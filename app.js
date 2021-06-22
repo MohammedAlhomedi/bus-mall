@@ -7,10 +7,10 @@ function randomNumber(min, max) {
 };
 
 
-let ImgAll = document.getElementById('imgAll');
-let firstImg = document.getElementById('firstImg');
-let secondImg = document.getElementById('secondImg');
-let thirdImg = document.getElementById('thirdImg');
+let imgAll = document.getElementById('imgAll');
+let firstimg = document.getElementById('firstimg');
+let secondimg = document.getElementById('secondimg');
+let thirdimg = document.getElementById('thirdimg');
 let viewInfo = document.getElementById('viewInfo');
 let buttonResults = document.getElementById('buttonResults');
 let Chart = document.getElementById('myChart');
@@ -24,20 +24,20 @@ let firstIndex;
 let secondIndex;
 let thirdIndex;
 
-function ShowImg(name, src) {
+function Showimg(name, src) {
   this.name = name;
 
   this.view = 0;
   this.clicks = 0;
-  this.imgsrc = `./Img/${src}`;
-  ShowImg.all.push(this);
+  this.imgsrc = `./img/${src}`;
+  Showimg.all.push(this);
 
 };
 
-ShowImg.all = [];
+Showimg.all = [];
 
 for (let i = 0; i < imgArray.length; i++) {
-  new ShowImg(imgArray[i].split('.')[0], imgArray[i]);
+  new Showimg(imgArray[i].split('.')[0], imgArray[i]);
 };
 
 function render() {
@@ -49,27 +49,27 @@ function render() {
   } while ((firstIndex === secondIndex) || (firstIndex === thirdIndex) || (secondIndex === thirdIndex));
 
 
-  firstImg.src = ShowImg.all[firstIndex].imgsrc;
-  secondImg.src = ShowImg.all[secondIndex].imgsrc;
-  thirdImg.src = ShowImg.all[thirdIndex].imgsrc;
+  firstimg.src = Showimg.all[firstIndex].imgsrc;
+  secondimg.src = Showimg.all[secondIndex].imgsrc;
+  thirdimg.src = Showimg.all[thirdIndex].imgsrc;
 
-  ShowImg.all[firstIndex].view++;
+  Showimg.all[firstIndex].view++;
 
-  ShowImg.all[secondIndex].view++;
-  ShowImg.all[thirdIndex].view++;
+  Showimg.all[secondIndex].view++;
+  Showimg.all[thirdIndex].view++;
 };
 
 
 function eventHandler(e) {
-  if ((e.target.id === 'firstImg' || e.target.id === 'secondImg' || e.target.id === 'thirdImg') && counter < round) {
-    if (e.target.id === 'firstImg') {
-      ShowImg.all[firstIndex].clicks++;
+  if ((e.target.id === 'firstimg' || e.target.id === 'secondimg' || e.target.id === 'thirdimg') && counter < round) {
+    if (e.target.id === 'firstimg') {
+      Showimg.all[firstIndex].clicks++;
     }
-    if (e.target.id === 'firstImg') {
-      ShowImg.all[secondIndex].clicks++;
+    if (e.target.id === 'firstimg') {
+      Showimg.all[secondIndex].clicks++;
     }
-    if (e.target.id === 'firstImg') {
-      ShowImg.all[thirdIndex].clicks++;
+    if (e.target.id === 'firstimg') {
+      Showimg.all[thirdIndex].clicks++;
     }
     counter++;
 
@@ -85,7 +85,7 @@ function showData(e) {
   for (let i = 0; i < imgArray.length; i++) {
     let li = document.createElement('li');
     ul.appendChild(li);
-    li.textContent = `${ShowImg.all[i].name} banana had ${ShowImg.all[i].clicks} votes, and was seen ${ShowImg.all[i].view} times`
+    li.textContent = `${Showimg.all[i].name} banana had ${Showimg.all[i].clicks} votes, and was seen ${Showimg.all[i].view} times`
   }
   buttonResults.removeEventListener('click', showData);
 }
