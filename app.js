@@ -13,7 +13,8 @@ let secondimg = document.getElementById('secondimg');
 let thirdimg = document.getElementById('thirdimg');
 let viewInfo = document.getElementById('viewInfo');
 let buttonResults = document.getElementById('buttonResults');
-let Chart = document.getElementById('myChart');
+let chart = document.getElementById('myChart');
+{/* <script>  let myChart = document.getElementById('myChart').getContext('myChart')</script> */ }
 
 
 let imgArray = ['banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
@@ -48,7 +49,6 @@ function render() {
     thirdIndex = randomNumber(0, imgArray.length - 1);
   } while ((firstIndex === secondIndex) || (firstIndex === thirdIndex) || (secondIndex === thirdIndex));
 
-
   firstimg.src = Showimg.all[firstIndex].imgsrc;
   secondimg.src = Showimg.all[secondIndex].imgsrc;
   thirdimg.src = Showimg.all[thirdIndex].imgsrc;
@@ -78,7 +78,6 @@ function eventHandler(e) {
 
 }
 
-
 function showData(e) {
   let ul = document.createElement('ul');
   viewInfo.appendChild(ul);
@@ -87,6 +86,7 @@ function showData(e) {
     ul.appendChild(li);
     li.textContent = `${Showimg.all[i].name} banana had ${Showimg.all[i].clicks} votes, and was seen ${Showimg.all[i].view} times`
   }
+  drawChart();
   buttonResults.removeEventListener('click', showData);
 }
 imgAll.addEventListener('click', eventHandler);
@@ -100,15 +100,16 @@ function drawChart() {
   let click = [];
 
 
-  for (let i = 0; i < ShowImage.all.length; i++) {
-    name.push(ShowImage.all[i].name);
-    view.push(ShowImage.all[i].view);
-    click.push(ShowImage.all[i].clicks);
+  for (let i = 0; i < Showimg.all.length; i++) {
+    name.push(Showimg.all[i].name);
+    view.push(Showimg.all[i].view);
+    click.push(Showimg.all[i].clicks);
   }
+
 
   let ctx = document.getElementById('myChart').getContext('2d');
 
-  new Chart(ctx, {
+  let newChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: name,
@@ -147,5 +148,7 @@ function drawChart() {
         }
       }
     }
-  });
+  }
+  );
 }
+
