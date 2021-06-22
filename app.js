@@ -86,12 +86,31 @@ function showData(e) {
     ul.appendChild(li);
     li.textContent = `${Showimg.all[i].name} banana had ${Showimg.all[i].clicks} votes, and was seen ${Showimg.all[i].view} times`
   }
+
+  buttonResults.removeEventListener('click',showData);
   drawChart();
-  buttonResults.removeEventListener('click', showData);
+  
+  localStorage.setItem('data', JSON.stringify(Showimg.all));
+
+  
 }
 imgAll.addEventListener('click', eventHandler);
 viewInfo.addEventListener('click', eventHandler);
 render();
+
+function saveData() {
+  let data = JSON.parse(localStorage.getItem('data'));
+  if(data) {
+     
+
+    Showimg.all=data;
+    }
+ 
+  console.log(Showimg.all);
+}
+
+saveData();
+
 
 function drawChart() {
 
@@ -109,7 +128,7 @@ function drawChart() {
 
   let ctx = document.getElementById('myChart').getContext('2d');
 
-  let newChart = new Chart(ctx, {
+  let chart =new Chart(ctx, {
     type: 'bar',
     data: {
       labels: name,
